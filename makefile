@@ -5,7 +5,7 @@
 #
 # after activating your environment.
 
-PACKAGE = mypackage
+PACKAGE = topoformer_membrane
 
 help:
 	@echo ""

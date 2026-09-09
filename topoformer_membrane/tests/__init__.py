@@ -1,4 +1,4 @@
-"""Test package for mypackage.
+"""Test package for topoformer_membrane.
 
 Overview:
 - Purpose: Mark this directory as a Python test package.
