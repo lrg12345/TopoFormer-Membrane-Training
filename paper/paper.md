@@ -34,7 +34,9 @@ Use this section to draft short reflections from each in-class activity. These n
 
 ## Modeling Intro
 
-Draft a short reflection on what you learned in the modeling intro activities, which tools or techniques were most useful, how the work relates to your project, and whether you plan to adopt any of the ideas.
+This activity helped me understand how a working script can be gradually turned into a more reusable software tool. I learned how to move functions into a separate Python module, import them into a notebook, inspect them with `dir()` and `help()`, and make the same file usable from the command line with `if __name__ == "__main__":`. I also learned how tools like Ruff and git diff can help improve code quality and make automated changes easier to review.
+
+The most useful techniques for me were separating reusable functions from notebook-specific code, using `%autoreload 2` while developing a library, and using Ruff to catch formatting issues automatically. These ideas relate directly to my research project because I already work with computational pipelines and scripts that are reused across multiple analyses. I plan to adopt more of this structure in my project code by keeping reusable functions in modules, using clearer docstrings, and running linting and formatting tools before committing changes.
 
 ## Analytical Modeling
 
