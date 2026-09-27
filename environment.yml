@@ -11,6 +11,7 @@ dependencies:
   - python>=3.11,<3.13  # Core runtime (required)
   - pip  # Core package installer (required)
   - pytest  # Optional: unit testing tool
+  - pandas  # Data analysis for TopoFormer prediction summaries
   - pytest-cov  # Optional: test coverage reporting
   - black  # Optional: automatic code formatting
   - ruff  # Optional: linting and style checks

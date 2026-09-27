@@ -24,6 +24,10 @@ target-version = ["py311", "py312"]
 [tool.ruff]
 line-length = 88
 target-version = "py311"
+exclude = [
+    "00_START_HERE.ipynb",
+    "scripts/rename_package.py",
+]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP"]
