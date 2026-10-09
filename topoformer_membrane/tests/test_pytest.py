@@ -1,7 +1,10 @@
 """Tests for TopoFormer membrane-training utilities."""
 
+from pathlib import Path
+
 import pandas as pd
 import pytest
+from pandas.testing import assert_frame_equal
 
 from topoformer_membrane import find_split_overlap
 from topoformer_membrane.analysis import (
@@ -118,3 +121,30 @@ def test_summarize_predictions_rejects_missing_columns() -> None:
 
     with pytest.raises(ValueError):
         summarize_predictions(df)
+
+
+
+
+
+def test_reference_oatp1b3_workflow() -> None:
+    """Reference OATP1B3 example should reproduce the committed summary."""
+    repo_root = Path(__file__).resolve().parents[2]
+
+    input_path = repo_root / "examples" / "1b3_example_predictions.csv"
+    expected_path = repo_root / "results" / "1b3_example_summary.csv"
+
+    predictions = pd.read_csv(input_path)
+    expected = pd.read_csv(expected_path)
+
+    observed = summarize_predictions(predictions)
+
+    assert len(predictions) == 28
+    assert len(observed) == 3
+
+    assert_frame_equal(
+        observed,
+        expected,
+        check_exact=False,
+        rtol=1e-10,
+        atol=1e-12,
+    )

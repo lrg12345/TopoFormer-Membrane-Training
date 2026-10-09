@@ -86,6 +86,30 @@ The included example contains 28 structure-level predictions for three OATP1B3 l
 
 A larger OATP1B3 dataset containing 1,082 structure-level predictions across 109 ligands was also processed successfully using the same workflow.
 
+
+## Validation
+
+The project includes a regression validation based on the included OATP1B3 example dataset. The validation regenerates the ligand-level summary from `examples/1b3_example_predictions.csv` and compares it against the committed reference output in `results/1b3_example_summary.csv`.
+
+Run the validation with:
+
+    make validate
+
+A successful validation should report one passing test and confirm that:
+
+- 28 structure-level TopoFormer predictions are processed,
+- 3 transporter-ligand summary rows are produced,
+- replicate counts are preserved as 8, 10, and 10,
+- calculated prediction and runtime statistics match the committed reference output within floating-point tolerance.
+
+Validation is expected to fail if required input columns are missing, prediction identifiers do not follow the expected naming convention, or changes to the aggregation logic produce results that no longer match the reference output.
+
+### Assumptions and Limitations
+
+The current workflow assumes TopoFormer output contains the columns `pdbid`, `pK_predicted`, `t_prep_s`, and `t_inf_s`, and that identifiers follow the pattern `<transporter>_<ligand>_AF3_<replicate>`. The workflow does not assume that every ligand has the same number of successful structure predictions; incomplete replicate sets are preserved through the `n_structures` field.
+
+This validation checks the correctness and reproducibility of post-inference processing. It does not validate the scientific accuracy of TopoFormer affinity predictions against experimental measurements. The current reference case is limited to OATP1B3 and has not yet been extended to OATP1B1, OATP2B1, or other transporter families.
+
 ## Next Step
 
 The next phase will connect this analysis workflow to the broader membrane-transporter retraining project. Planned improvements include integrating additional transporter datasets, comparing baseline and retrained TopoFormer predictions, and expanding the evaluation workflow as experimentally labeled data become available.

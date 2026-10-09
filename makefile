@@ -15,6 +15,7 @@ help:
 	@echo "  make lint       Check code with Ruff"
 	@echo "  make format     Format code with Ruff"
 	@echo "  make test       Run tests"
+	@echo "  make validate   Run reference workflow validation"
 	@echo "  make type       Run MyPy"
 	@echo "  make docs       Build documentation"
 	@echo "  make check      Run lint and tests"
@@ -34,6 +35,9 @@ format:
 test:
 	pytest -v
 
+validate:
+	pytest -v topoformer_membrane/tests/test_pytest.py::test_reference_oatp1b3_workflow
+
 type:
 	mypy $(PACKAGE)
 
@@ -52,4 +56,4 @@ clean:
 	rm -rf .ruff_cache
 	find . -type d -name __pycache__ -exec rm -rf {} +
 
-.PHONY: help init lint format test type docs check check-full clean
+.PHONY: help init lint format test validate type docs check check-full clean

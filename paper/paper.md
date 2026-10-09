@@ -40,7 +40,9 @@ The most useful techniques for me were separating reusable functions from notebo
 
 ## Analytical Modeling
 
-Draft a short reflection on what you learned in the analytical modeling activities, which methods or tools were most useful, how the work relates to your project, and whether you plan to adopt any of the ideas.
+This assignment helped me think more carefully about analytical modeling as a process rather than just a final equation. I learned how symbolic tools such as SymPy can be used to define and manipulate model components, while numerical and statistical tools such as NumPy, pandas, and statsmodels are useful for exploring noisy data, estimating parameters, and evaluating model fit. The most useful part for me was seeing how residuals, parameter recovery, and model comparison can reveal problems that are not obvious from a single summary statistic. 
+
+This connects well to my own research, where I work with computational models of protein–ligand interactions and often need to determine whether an apparent relationship reflects a meaningful signal or noise in the data. I can see myself using synthetic data, parameter-recovery tests, residual analysis, and model comparison more deliberately when validating computational pipelines or relating molecular features to experimental outcomes. Going forward, I plan to adopt more of these diagnostic and reproducibility practices rather than relying only on model performance metrics.
 
 ## Physical Modeling
 
