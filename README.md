@@ -28,9 +28,18 @@ Large training datasets, generated features, and model outputs will not be store
 
 ## Project Status
 
-Milestone 2 includes an initial working prototype for processing TopoFormer inference output. The current implementation parses transporter, ligand, and AlphaFold3 replicate identifiers and aggregates multiple structure-level predictions into standardized ligand-level summary statistics.
+The repository currently provides a working, tested analysis workflow for processing TopoFormer protein-ligand binding-affinity predictions. The implemented functionality includes:
 
-The prototype has been tested on a full OATP1B3 inference dataset containing 1,082 structure-level predictions across 109 ligands.
+- Parsing transporter, ligand, and AlphaFold3 replicate identifiers from TopoFormer output.
+- Aggregating structure-level predictions into ligand-level summary statistics.
+- Recording the number of available structures per ligand, including incomplete replicate sets.
+- Checking for overlapping identifiers between training and test datasets.
+- Running automated unit tests and a reproducible reference validation.
+- Generating HTML API documentation using pdoc.
+
+The workflow has been demonstrated using 1,082 OATP1B3 structure-level predictions representing 109 ligands. A smaller, self-contained example containing 28 predictions for three ligands is included for independent reproduction.
+
+The broader research goal is to retrain TopoFormer using membrane-transporter-enriched datasets and compare predictive performance against the original model. Dataset preparation, retraining, and experimental accuracy evaluation are planned components and are not yet implemented in this repository.
 
 ## Planned Workflow
 
@@ -38,23 +47,44 @@ The broader project will use the existing TopoFormer training and evaluation wor
 
 The current prototype provides the analysis layer needed to summarize TopoFormer predictions consistently before later model comparisons are performed.
 
-## Software Setup
+## Installation and Setup
 
-Create or update the project environment with:
+Requirements: Git, Conda or Miniforge, and Make.
 
-```bash
-make init
-```
+### Fresh Installation
 
-Activate the environment, then use the standard project checks:
+Clone the repository:
 
-```bash
-make lint
-make test
-make check
-```
+    git clone https://github.com/lrg12345/TopoFormer-Membrane-Training.git
+    cd TopoFormer-Membrane-Training
 
-The current test suite includes checks for dataset overlap detection, TopoFormer identifier parsing, input validation, and prediction aggregation.
+Create the project environment:
+
+    make init
+
+Activate the environment:
+
+    conda activate ./.envs
+
+All subsequent commands should be run from the repository root with this environment active.
+
+### Verify the Installation
+
+    make help
+    make check
+    make validate
+    make docs
+
+Expected results:
+
+- `make help` lists the available commands.
+- `make check` runs Ruff and 10 pytest tests.
+- `make validate` runs the OATP1B3 reference regression test.
+- `make docs` generates HTML API documentation in `docs/`.
+
+Open `docs/index.html` in a browser to view the generated documentation.
+
+The included example does not require HPCC access, private research data, GPU resources, or a trained TopoFormer model.
 
 ## Running the Prototype
 
@@ -86,6 +116,34 @@ The included example contains 28 structure-level predictions for three OATP1B3 l
 
 A larger OATP1B3 dataset containing 1,082 structure-level predictions across 109 ligands was also processed successfully using the same workflow.
 
+
+## Reproducibility Walkthrough
+
+The included OATP1B3 example provides a self-contained way to reproduce the analysis workflow without access to private research data.
+
+From the repository root, with the project environment activated, run:
+
+    python -m scripts.summarize_predictions examples/1b3_example_predictions.csv results/1b3_reproduced_summary.csv
+
+Expected terminal output:
+
+    Read 28 structure-level predictions.
+    Summarized 3 transporter-ligand pairs.
+    Wrote summary to: results/1b3_reproduced_summary.csv
+
+The generated CSV contains one row per ligand, including prediction statistics and runtime measurements. Representative expected values are:
+
+| Ligand | Structures | Mean predicted pK |
+| --- | ---: | ---: |
+| 17-b-estradiol | 8 | 5.263052 |
+| 5-carboxyfluoresceindiacetate | 10 | 6.207954 |
+| acarbose | 10 | 4.938985 |
+
+Compare the reproduced output with the committed reference using:
+
+    make validate
+
+This command independently regenerates the summary from the example input and checks numerical agreement with the committed reference. A successful run reports one passing test. The generated `results/1b3_reproduced_summary.csv` file is not required for the automated validation.
 
 ## Validation
 

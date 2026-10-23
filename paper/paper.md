@@ -1,16 +1,16 @@
 ---
-title: 'My Research Software Title'
+title: 'TopoFormer Membrane Training: Reproducible Analysis of Membrane Transporter-Ligand Affinity Predictions'
 authors:
-  - name: Your Name
+  - name: Logan Garland
     affiliation: '1'
 affiliations:
-  - name: Your Institution
+  - name: Michigan State University
     index: 1
 ---
 
 # Summary
 
-Provide a concise summary of the software and its purpose for a broad, non-specialist audience. Explain what the software does and why it matters in a research context.
+This project develops reproducible analysis tools supporting the evaluation and eventual retraining of TopoFormer for membrane-transporter protein-ligand systems. The current software parses structure-level binding-affinity predictions, aggregates predictions across replicate protein-ligand structures, and generates standardized ligand-level statistics. Automated tests, reference validation data, and documented command-line workflows provide a reproducible foundation for future comparisons between baseline and membrane-transporter-enriched models.
 
 # Statement of need
 
@@ -31,6 +31,16 @@ Summarize the current or expected impact of the software. This can include repro
 # Project evolution and lessons learned
 
 Use this section to draft short reflections from each in-class activity. These notes can later be refined into the final report and should connect the course activities to your project.
+
+## Reproducibility and Repository Review
+
+As part of the Milestone 4 documentation and reproducibility pass, I tested the project in an isolated copy of the repository with a separately created Conda environment on the MSU HPCC. This test used the included example data rather than relying on private research files or previously generated intermediate outputs.
+
+The independent workflow successfully generated API documentation using pdoc, passed all 10 automated tests, and reproduced the reference OATP1B3 prediction summary. Specifically, 28 structure-level predictions were aggregated into three ligand-level summaries, with numerical results matching the committed reference within floating-point tolerance.
+
+The initial review exposed a reproducibility issue: Ruff scanned the project-local Conda environment and reported errors from third-party dependencies. Adding `.envs/` to the Ruff exclusion configuration resolved the issue, allowing `make check` to run successfully in the isolated environment.
+
+This exercise reinforced the importance of testing installation and execution instructions independently of the development environment. It also highlighted the value of distributing small example datasets, documenting expected outputs, and providing automated validation commands. A true fresh Git clone on another operating system remains to be tested.
 
 ## Modeling Intro
 

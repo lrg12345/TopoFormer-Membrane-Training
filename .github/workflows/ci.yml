@@ -27,14 +27,14 @@ jobs:
         uses: conda-incubator/setup-miniconda@v3
         with:
           python-version: ${{ matrix.python-version }}
-          activate-environment: scientific-software-template
+          activate-environment: topoformer-membrane
           environment-file: environment.yml
           auto-activate-base: false
 
       - name: Run required beginner checks
         shell: bash -l {0}
         run: |
-          make test
+          make check
           # Optional checks for advanced students.
           # Uncomment these lines when your class is ready.
           # make lint

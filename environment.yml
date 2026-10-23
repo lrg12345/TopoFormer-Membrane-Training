@@ -3,7 +3,7 @@
 # - Used by: `make init` and GitHub Actions setup.
 # - Adds: One-file setup for a complete and reproducible starter toolchain.
 # - Learn more: https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html
-name: scientific-software-template
+name: topoformer-membrane
 channels:
   - conda-forge
   - defaults
@@ -25,5 +25,4 @@ dependencies:
   - jupyterlab  # Optional: notebook/lab interface
   - pip:
       - detect-secrets  # Optional: secret scanning for commits/CI
-prefix: ./envs
 
