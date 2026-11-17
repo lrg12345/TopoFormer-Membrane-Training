@@ -117,6 +117,26 @@ The included example contains 28 structure-level predictions for three OATP1B3 l
 A larger OATP1B3 dataset containing 1,082 structure-level predictions across 109 ligands was also processed successfully using the same workflow.
 
 
+## Automated Project Workflow
+
+The project provides two Makefile commands for running the included OATP1B3 analysis directly from the repository root.
+
+To generate a ligand-level summary from the included example data, run:
+
+    make run-example
+
+This processes 28 structure-level predictions and writes three ligand-level summaries to `results/1b3_reproduced_summary.csv`.
+
+To run the analysis and automatically verify the generated output, run:
+
+    make reproduce
+
+This executes `make run-example`, then compares the generated CSV against `results/1b3_example_summary.csv` using numerical tolerances. A successful run prints:
+
+    PASS: Reproduced OATP1B3 output matches the reference.
+
+The `make reproduce` command fails if the analysis fails or the generated results differ from the reference. It requires only the included example data and the documented Conda environment; private HPCC datasets and GPU resources are not needed.
+
 ## Reproducibility Walkthrough
 
 The included OATP1B3 example provides a self-contained way to reproduce the analysis workflow without access to private research data.
